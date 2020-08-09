@@ -1,0 +1,134 @@
+<form [formGroup]="registrationForm" name="regForm" (ngSubmit)="RegisterUser()"> 
+  <!-- <div class="panel panel-primary"> 
+  <div class="panel-heading">
+    <h1 class="panel-title"> Employee Registration </h1>
+  </div>
+  <div class="panel-body">
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="Name"> Employee Name</label>
+      <div class="col-sm-8">
+        <input type="text" id="Name" class="form-control" placeholder="Employee Name" formControlName="Name">
+        <span class="help-block text-danger" *ngIf="registrationForm.get('Name').errors
+        && (registrationForm.get('Name').touched || registrationForm.get('Name').dirty)">
+          <span *ngIf="registrationForm.get('Name').errors.required"> Name is required </span>
+        </span>
+      </div>
+    </div>
+  </div> -->
+  <div class="container">
+  <div class="panel-heading">
+    <h1 class="panel-title"> Employee Registration </h1>
+  </div>
+    <table class="table table-condensed table-responsive">
+      <tr>
+        <td>
+          <label class="label" for="Name"> Employee Name</label>
+        </td>
+          <td>
+            <input type="hidden" id="empid"  formControlName="Id"/>
+            <input type="text" id="Name"  class="form-control" placeholder="Employee Name" formControlName="Name">
+        <span class="help-block text-danger" *ngIf="registrationForm.get('Name').errors
+        && (registrationForm.get('Name').touched || registrationForm.get('Name').dirty)">
+          <span *ngIf="registrationForm.get('Name').errors.required"> {{NameRequired}} </span>
+          <span *ngIf="registrationForm.get('Name').errors.minlength || 
+        registrationForm.get('Name').errors.maxlength" >{{NameMinMax}} </span>
+        </span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label class="label">DOB</label>          
+        </td>
+        <td>
+          <input type="date" formControlName="DOB">
+          <span class="help-block text-danger" *ngIf="registrationForm.get('DOB').errors
+          && (registrationForm.get('DOB').touched || registrationForm.get('DOB').dirty)">
+            <span *ngIf="registrationForm.get('DOB').errors.required"> {{DOBRequired}} </span>            
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label class="label"> Mobile</label>
+        </td>
+        <td>
+          <input type="text" id="Mobile"  class="form-control" placeholder="Mobile No" formControlName="Mobile" appOnlynumbers>
+        <span class="help-block text-danger" *ngIf="registrationForm.get('Mobile').errors
+        && (registrationForm.get('Mobile').touched || registrationForm.get('Mobile').dirty)">
+          <span *ngIf="registrationForm.get('Mobile').errors.required"> {{MobileRequired}} </span>
+        </span>        
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label class="label"> Blood Group</label>
+        </td>
+        <td>
+          <select class="form-control" (change)="SelectedBGroup($event.target.value)" formControlName="BloodGroup">
+            <option *ngFor="let bloodgroup of bloodgroups; let i = index" [value]="bloodgroup.name">
+              {{bloodgroup.name}}
+            </option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label class="label"> Designation</label>
+        </td>
+        <td>
+          <input type="text" placeholder="ex: Developer" class="form-control" formControlName="Designation">
+          <span class="help-block text-danger" *ngIf="registrationForm.get('Designation').errors
+          && (registrationForm.get('Designation').touched || registrationForm.get('Designation').dirty)">
+            <span *ngIf="registrationForm.get('Designation').errors.required"> {{DesignationRequired}} </span>
+          </span> 
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label class="label"> Gender</label>
+        </td>
+        <td>         
+          <input type="radio" name="Gender" value="Male" (change)="onItemChange($event.target.value)"> Male
+          <input type="radio" name="Gender"  value ="Female" (change)="onItemChange($event.target.value)" > Female
+          <!-- <span class="help-block text-danger" *ngIf="registrationForm.get('Gender').touched && registrationForm.get('Gender').invalid">
+          <span *ngIf="registrationForm.get('Gender').errors.required"> {{GenderRequired}} </span>
+          </span> -->
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label class="label"> Photo</label>
+        </td>
+        <td>
+          <input type="file" (change)="ImageUpload($event)" placeholder="upload Image" accept=".png,.jpg,.jpeg,.gif">
+          <img src="{{imageSrc}}"  class="img-rounded" alt="No-Image" style="height:100px;width:100px" />
+        </td>
+      </tr>
+      <tr>
+        <div>
+          <input type="checkbox" formControlName="Accept">
+          Are you sure you want to register with our app?    
+          <span class="help-block text-danger" *ngIf="registrationForm.get('Accept').errors
+        && (registrationForm.get('Accept').touched || registrationForm.get('Accept').dirty)">
+          <span *ngIf="registrationForm.get('Accept').errors.required"> Need to accept terms </span>   
+          </span>   
+        </div>
+      </tr>
+      <tr>
+        <td>
+          </td>
+          <td>
+          <div class="container">          
+            <button type="button" style="padding-right: 10px" (click)="registrationForm.reset({})" class="btn btn-primary"> Reset</button>    
+            &nbsp;        
+            <button type="submit" class="btn btn-success" [disabled]="registrationForm.invalid"> Submit</button>                  
+        </div>
+        </td>        
+      </tr>
+    </table>
+  </div>
+  <!-- </div> -->
+</form>
+
+<app-user-grid [employees] ="emps" (EmpIdOutput)="viewEmployee($event)" (DelEmpIdOutput)="deleteUser($event)"> </app-user-grid>
+

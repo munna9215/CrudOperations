@@ -1,0 +1,50 @@
+
+<table class="table table-bordered" style="border:1px solid #ccc">
+    <thead>
+    <tr>
+    <th >
+            ID
+        </th>
+        <th>
+            Actions
+        </th>
+        <th >
+            Name
+        </th>
+        <th >
+            Designation
+        </th>
+        <th >
+            DOB
+        </th>
+        <th >
+            Blood Group
+        </th>
+        <th >
+            Gender
+        </th>
+        <th >
+            Mobile
+        </th>
+    </tr>
+</thead>
+<tbody>
+    <tr  *ngFor="let employee of employees ; let j = index">
+        <td>  {{employee.Id}}</td>
+        <td>
+            <a href="#" (click)="DeleteUser(employee.Id)"> Delete </a>                             
+        </td>
+        <td> <a href="#" (click)="EditUser(employee.Id)"> {{employee.Name | userTitle:employee.Gender}} </a> </td>
+    
+        <td> {{employee.Designation}} </td>
+    
+        <td> {{employee.DOB}} </td>
+    
+        <td> {{employee.BloodGroup}} </td>
+   
+        <td> {{employee.Gender}} </td>
+   
+        <td> {{employee.Mobile}} </td>
+    </tr>
+</tbody>
+</table>
